@@ -1,0 +1,44 @@
+<form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="form-group">
+      <label for="phone">Телефон</label>
+      <input type="tel" id="phone" formControlName="phone" placeholder="Номер телефона" class="form-control">
+      <div *ngIf="checkoutForm.get('phone')?.invalid && checkoutForm.get('phone')?.touched" class="alert alert-danger">
+        {{ getErrorMessage('phone') }}
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="firstName">Имя</label>
+      <input type="text" id="firstName" formControlName="firstName" placeholder="Имя" class="form-control">
+      <div *ngIf="checkoutForm.get('firstName')?.invalid && checkoutForm.get('firstName')?.touched" class="alert alert-danger">
+        {{ getErrorMessage('firstName') }}
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="lastName">Фамилия</label>
+      <input type="text" id="lastName" formControlName="lastName" placeholder="Фамилия" class="form-control">
+      <div *ngIf="checkoutForm.get('lastName')?.invalid && checkoutForm.get('lastName')?.touched" class="alert alert-danger">
+        {{ getErrorMessage('lastName') }}
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="email">Электронная почта</label>
+      <input type="email" id="email" formControlName="email" placeholder="Электронная почта" class="form-control">
+      <div *ngIf="checkoutForm.get('email')?.invalid && checkoutForm.get('email')?.touched" class="alert alert-danger">
+        {{ getErrorMessage('email') }}
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="address">Адрес</label>
+      <input type="text" id="address" formControlName="address" placeholder="Адрес доставки" class="form-control">
+      <div *ngIf="checkoutForm.get('address')?.invalid && checkoutForm.get('address')?.touched" class="alert alert-danger">
+        {{ getErrorMessage('address') }}
+      </div>
+    </div>
+  
+    <button type="submit" class="btn btn-primary" [disabled]="!checkoutForm.valid">Оформить заказ</button>
+  </form>
+  
