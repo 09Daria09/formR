@@ -11,20 +11,25 @@ export class CheckFormComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.checkoutForm = this.formBuilder.group({
-      phone: ['', [Validators.required, Validators.pattern("^\\+?3?8?(0\\d{9})$")]],
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
+      phone: ['', [Validators.required, Validators.pattern("^\\+?\\d{1,3}?[-.\\s]?\\(?\\d{1,3}\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$")]],
+      firstName: ['', [Validators.required, Validators.minLength(2), Validators.pattern("^[a-zA-Zа-яА-ЯёЁ\s-]+$")]],
+      lastName: ['', [Validators.required, Validators.minLength(2), Validators.pattern("^[a-zA-Zа-яА-ЯёЁ\s-]+$")]],
       email: ['', [Validators.required, Validators.email]],
-      address: ['', Validators.required] 
+      address: ['', Validators.required],
+      deliveryMethod: ['', Validators.required],
+      paymentMethod: ['', Validators.required],
+      giftWrap: [false]
     });
   }
+  
+  
 
   getErrorMessage(controlName: string) {
     const control = this.checkoutForm.get(controlName);
     if (!control) {
       return ''; 
     }
-
+  
     if (control.hasError('required')) {
       return 'Это поле обязательно к заполнению';
     } else if (control.hasError('minlength')) {
@@ -32,11 +37,16 @@ export class CheckFormComponent {
     } else if (control.hasError('email')) {
       return 'Введите корректный email';
     } else if (control.hasError('pattern')) {
-      return 'Введите корректный номер телефона';
+      if (controlName === 'phone') {
+        return 'Введите корректный номер телефона';
+      } else if (controlName === 'firstName' || controlName === 'lastName') {
+        return 'Используйте только буквы, пробелы и дефисы';
+      }
     }
-
+  
     return '';
   }
+  
 
   onSubmit() {
     if (this.checkoutForm.valid) {
